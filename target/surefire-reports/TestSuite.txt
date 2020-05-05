@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: TestSuite
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 37.506 s <<< FAILURE! - in TestSuite
+loginTest(com.qa.hubspot.tests.LoginPageTest)  Time elapsed: 11.821 s  <<< FAILURE!
+java.lang.AssertionError: login is failed.... expected [MrCooper] but found [null]
+	at com.qa.hubspot.tests.LoginPageTest.loginTest(LoginPageTest.java:66)
+
