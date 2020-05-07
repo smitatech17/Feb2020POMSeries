@@ -18,7 +18,7 @@ public class LoginPage extends BasePage {
 	By username = By.id("username");
 	By password = By.id("password");
 	By loginButton = By.id("loginBtn");
-	By SignUpLink = By.linkText("Sign up123");
+	By SignUpLink = By.linkText("Sign up");
 
 	
 	//2. constructor of the page class:
