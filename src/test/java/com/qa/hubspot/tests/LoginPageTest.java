@@ -68,6 +68,7 @@ public class LoginPageTest {
 	
 	@AfterTest
 	public void tearDown() {
+		System.out.println("close the browser");
 		driver.quit();
 	}
 	
