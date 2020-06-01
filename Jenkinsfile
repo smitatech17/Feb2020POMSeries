@@ -7,6 +7,12 @@ pipeline {
       }
     }
 
+    stage('Deploy on QA Env') {
+      steps {
+        sh 'echo "Deploy on QA Env"'
+      }
+    }
+    
     stage('QA Testing') {
       parallel {
         stage('QA Testing') {
@@ -50,6 +56,18 @@ pipeline {
           }
         }
 
+        stage('ENV Config') {
+          steps {
+            sh 'echo "setup Env Config"'
+          }
+        }
+        
+        stage('start build server') {
+          steps {
+            sh 'echo "start build server"'
+          }
+        }
+        
         stage('ENV Config') {
           steps {
             sh 'echo "setup Env Config"'
