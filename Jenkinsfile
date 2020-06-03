@@ -1,29 +1,86 @@
 pipeline {
   agent any
   stages {
-    stage('Test Run on Dev') {
-      steps {
-        sh 'mvn clean install -Denv="dev"'
+    stage('Build Dev') {
+      parallel {
+        stage('Build Dev') {
+          steps {
+            sh 'mvn clean install -DskipTests=true'
+          }
+        }
+
+        stage('chrome') {
+          steps {
+            sh 'mvn test -Denv=dev -Dbrowser=chrome'
+          }
+        }
+
       }
     }
 
-    stage('Test Run on QA') {
-      steps {
-        sh 'mvn clean install -Denv="qa"'
+    stage('Build QA') {
+      parallel {
+        stage('Build QA') {
+          steps {
+            sh 'mvn clean install -DskipTests=true'
+          }
+        }
+
+        stage('chrome') {
+          steps {
+            sh 'mvn test -Denv=qa -Dbrowser=chrome'
+          }
+        }
+
+        stage('firefox') {
+          steps {
+            sh 'mvn test -Denv=qa -Dbrowser=firefox'
+          }
+        }
+
       }
     }
 
-    stage('Test Run on Stage') {
-      steps {
-        sh 'mvn clean install -Denv="stage"'
+    stage('Build Stage') {
+      parallel {
+        stage('Build Stage') {
+          steps {
+            sh 'mvn clean install -DskipTests=true'
+          }
+        }
+
+        stage('firefox') {
+          steps {
+            sh 'mvn test -Denv=stage -Dbrowser=firefox'
+          }
+        }
+
+        stage('chrome') {
+          steps {
+            sh 'mvn test -Denv=stage -Dbrowser=chrome'
+          }
+        }
+
       }
     }
 
-    stage('Test Run on PROD') {
+    stage('Publish reports') {
       steps {
-        sh 'mvn clan install -Denv="dev"'
+        script {
+          allure([
+            includeProperties: false,
+            jdk: '',
+            properties: [],
+            reportBuildPolicy: 'ALWAYS',
+            results: [[path: '/allure-results']]
+          ])
+        }
+
       }
     }
 
+  }
+  tools {
+    maven 'M3'
   }
 }
